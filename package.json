@@ -1,0 +1,21 @@
+{
+  "name": "meydan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An arcade of ten classic games, each with a different AI opponent that shows how it thinks.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "~5.9.0",
+    "vite": "^7.3.0",
+    "vitest": "^5.1.0"
+  },
+  "license": "MIT",
+  "author": "Numan AK"
+}
