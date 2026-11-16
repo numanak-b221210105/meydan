@@ -83,7 +83,7 @@ export function mount(host: Host): void {
       const id = setInterval(() => {
         dice = [1 + Math.floor(Math.random() * 6), 1 + Math.floor(Math.random() * 6)];
         drawDice(true);
-        sfx.tick();
+        sfx.dice();
         if (++n >= 7 || host.closed) { clearInterval(id); drawDice(false); res(); }
       }, 70);
     });

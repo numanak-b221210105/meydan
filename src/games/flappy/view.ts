@@ -78,7 +78,7 @@ export function mount(host: Host): void {
       b.y += b.vy;
       b.fit++;
       for (const p of pipes) {
-        if (!p.passed.has(b) && p.x + 60 < BX - 14) { p.passed.add(b); b.pipes++; if (b.human) sfx.tick(); }
+        if (!p.passed.has(b) && p.x + 60 < BX - 14) { p.passed.add(b); b.pipes++; if (b.human) sfx.point(); }
         const inX = BX + 14 > p.x && BX - 14 < p.x + 60;
         if (inX && (b.y - 12 < p.gap - GAP / 2 || b.y + 12 > p.gap + GAP / 2)) b.alive = false;
       }
@@ -112,7 +112,7 @@ export function mount(host: Host): void {
     if (!birds[0].alive) { reset(); return; }
     if (!started) { started = true; host.status(L("Uç!", "Fly!")); }
     birds[0].vy = FLAP;
-    sfx.move();
+    sfx.flap();
   };
   host.on("keydown", (e) => { if (e.code === "Space" || e.code === "ArrowUp") { e.preventDefault(); flap(); } });
   canvas.addEventListener("pointerdown", flap);

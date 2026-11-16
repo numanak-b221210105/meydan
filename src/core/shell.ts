@@ -1,5 +1,6 @@
 // The game screen: a top bar, the stage, a control row and the AI console.
 import { h } from "./dom";
+import { audioToggles } from "./audio-ui";
 import { L } from "./i18n";
 import type { GameDef } from "./types";
 
@@ -29,7 +30,8 @@ export function openGame(game: GameDef, root: HTMLElement, back: () => void): ()
     h("header", { class: "g-top" },
       h("button", { class: "back", onclick: back, title: L("Meydana dön", "Back to the arcade") }, h("span", { html: "&larr;" }), L("Meydan", "Arcade")),
       h("div", { class: "g-title" }, h("span", { class: "g-art", html: game.art }), h("div", {}, h("h1", {}, game.name()), h("small", {}, game.blurb()))),
-      statusEl),
+      statusEl,
+      h("div", { class: "g-audio" }, ...audioToggles())),
     h("div", { class: "g-main" },
       h("section", { class: "g-play" }, stage, controls),
       h("aside", { class: "console" },

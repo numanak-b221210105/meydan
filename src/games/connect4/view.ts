@@ -59,7 +59,7 @@ export function mount(host: Host): void {
       const me = humanSide();
       const msg = w === 0 ? L("Berabere", "Draw") : me ? (w === me ? L("Kazandın!", "You win!") : L("Yapay zekâ kazandı", "The AI wins")) : w === 1 ? L("Camgöbeği kazandı", "Cyan wins") : L("Pembe kazandı", "Pink wins");
       host.status(msg, me ? (w === me ? "good" : w === 0 ? "warn" : "bad") : "");
-      if (me) { bump("connect4", w === 0 ? "d" : w === me ? "w" : "l"); w === me ? sfx.win() : sfx.lose(); }
+      if (me) { bump("connect4", w === 0 ? "d" : w === me ? "w" : "l"); w === 0 ? sfx.draw() : w === me ? sfx.win() : sfx.lose(); }
       if (mode === "watch") setTimeout(() => { if (!host.closed && mode === "watch") reset(); }, 2600);
       return;
     }

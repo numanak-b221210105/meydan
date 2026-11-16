@@ -55,7 +55,7 @@ export function mount(host: Host): void {
     }
     const ev = step(w, dt);
     if (ev.exploded) { sfx.boom(); for (const f of w.flames) fx.push({ x: f.cell % GW, y: Math.floor(f.cell / GW), t: performance.now() }); }
-    if (ev.picked) sfx.tick();
+    if (ev.picked) sfx.pickup();
     const alive = w.agents.filter((a) => a.alive);
     const human = w.agents.find((a) => a.human);
     if (human && !human.alive && !over) { over = true; host.status(L("Patladın! Yeni tur için Space", "You got blown up! Space for a new round"), "bad"); sfx.lose(); bump("bomber", "l"); round++; }
@@ -141,7 +141,7 @@ export function mount(host: Host): void {
       e.preventDefault();
       if (over) { restart(); return; }
       const me = w.agents.find((a) => a.human);
-      if (me && placeBomb(w, me)) sfx.move();
+      if (me && placeBomb(w, me)) sfx.drop();
     }
   });
   host.on("keyup", (e) => { if (e.code in KEYS) held = held.filter((d) => d !== KEYS[e.code]); });

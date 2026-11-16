@@ -90,7 +90,7 @@ export function mount(host: Host): void {
     const n = lock(board, cur);
     pieces++;
     if (n < 0) return end();
-    if (n) { lines += n; score += SCORE[n] * (1 + Math.floor(lines / 10)); sfx.capture(); flash = [performance.now()]; } else sfx.tick();
+    if (n) { lines += n; score += SCORE[n] * (1 + Math.floor(lines / 10)); sfx.clear(n); flash = [performance.now()]; } else sfx.lock();
     newPiece();
   }
   const level = () => 1 + Math.floor(lines / 10);
@@ -180,13 +180,13 @@ export function mount(host: Host): void {
     if (mode !== "play") return;
     if (over) { if (e.code === "Space" || e.code === "Enter") reset(); return; }
     if (paused) { paused = false; host.status(L("Sen oynuyorsun", "You're playing")); return; }
-    const mv = (p: Piece | null) => { if (p && fits(board, p)) cur = p; };
+    const mv = (p: Piece | null, sound: () => void = sfx.shift) => { if (p && fits(board, p)) { cur = p; sound(); } };
     switch (e.code) {
       case "ArrowLeft": mv({ ...cur, x: cur.x - 1 }); break;
       case "ArrowRight": mv({ ...cur, x: cur.x + 1 }); break;
       case "ArrowDown": if (fits(board, { ...cur, y: cur.y + 1 })) { cur = { ...cur, y: cur.y + 1 }; score += 1; } break;
-      case "ArrowUp": case "KeyX": mv(rotate(board, cur, 1)); break;
-      case "KeyZ": mv(rotate(board, cur, -1)); break;
+      case "ArrowUp": case "KeyX": mv(rotate(board, cur, 1), sfx.rotate); break;
+      case "KeyZ": mv(rotate(board, cur, -1), sfx.rotate); break;
       case "Space": score += 2 * (dropY(board, cur) - cur.y); cur = { ...cur, y: dropY(board, cur) }; place(); break;
       case "KeyP": paused = true; break;
       default: return;

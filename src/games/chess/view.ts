@@ -96,7 +96,7 @@ export function mount(host: Host): void {
       const who = o.winner === WHITE ? L("Beyaz kazandı", "White wins") : o.winner === BLACK ? L("Siyah kazandı", "Black wins") : L("Berabere", "Draw");
       const me = humanSide();
       host.status(`${reasons[o.reason]} · ${who}`, o.winner === 0 ? "warn" : me && o.winner === me ? "good" : me ? "bad" : "");
-      if (me) { bump("chess", o.winner === 0 ? "d" : o.winner === me ? "w" : "l"); o.winner === me ? sfx.win() : sfx.lose(); }
+      if (me) { bump("chess", o.winner === 0 ? "d" : o.winner === me ? "w" : "l"); o.winner === 0 ? sfx.draw() : o.winner === me ? sfx.win() : sfx.lose(); }
       return;
     }
     if (pos.side === humanSide()) {

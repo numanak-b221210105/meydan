@@ -59,7 +59,7 @@ export function mount(host: Host): void {
     lastFlips = play(s, i);
     last = i;
     hints.clear();
-    i >= 0 ? (lastFlips.length > 3 ? sfx.capture() : sfx.move()) : null;
+    if (i >= 0) { sfx.move(); setTimeout(lastFlips.length > 3 ? sfx.capture : sfx.flip, 90); }
     draw();
     next();
   }

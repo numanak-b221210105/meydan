@@ -81,7 +81,7 @@ export function mount(host: Host): void {
     if (r.over) {
       const msg = r.winner === 1 ? L("Beyaz kazandı", "White wins") : r.winner === -1 ? L("Siyah kazandı", "Black wins") : L("Berabere", "Draw");
       host.status(msg, mode === "play" ? (r.winner === 1 ? "good" : r.winner === 0 ? "warn" : "bad") : "");
-      if (mode === "play") { bump("dama", r.winner === 1 ? "w" : r.winner === 0 ? "d" : "l"); r.winner === 1 ? sfx.win() : sfx.lose(); }
+      if (mode === "play") { bump("dama", r.winner === 1 ? "w" : r.winner === 0 ? "d" : "l"); r.winner === 1 ? sfx.win() : r.winner === 0 ? sfx.draw() : sfx.lose(); }
       if (mode === "watch") setTimeout(() => { if (!host.closed && mode === "watch") reset(); }, 3000);
       return;
     }

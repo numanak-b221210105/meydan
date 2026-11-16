@@ -311,3 +311,12 @@ canvas.netc { width: 100%; height: auto; display: block; }
 .mc .mm { color: var(--ink-3); font-style: normal; }
 .mc.hint { box-shadow: 0 0 0 2px var(--lime), 0 0 16px var(--lime); z-index: 1; }
 .mc.last.o { box-shadow: inset 0 0 0 1px var(--accent); }
+
+/* sound toggles */
+.tbtn.snd .mute { display: none; }
+.tbtn.snd[aria-pressed="true"] { color: var(--cyan); border-color: rgba(34, 228, 255, .45); }
+.tbtn.snd[aria-pressed="false"] { color: var(--ink-3, #6b6890); }
+.tbtn.snd[aria-pressed="false"] .mute { display: inline; }
+.tbtn.snd[aria-pressed="false"] .wave { display: none; }
+.g-audio { display: flex; gap: 6px; margin-left: 10px; flex: none; }
+.status:empty + .g-audio { margin-left: auto; }

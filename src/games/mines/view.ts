@@ -61,7 +61,7 @@ export function mount(host: Host): void {
       host.status(L("Mayına bastın", "You hit a mine") + (byAI ? " · " + L("şanssız tahmin", "an unlucky guess") : ""), "bad");
       if (byAI) record(false);
     } else if (opened.length) {
-      sfx.tick();
+      sfx.reveal();
       if (s.won) {
         const sec = Math.round((performance.now() - t0) / 100) / 10;
         sfx.win();
@@ -123,7 +123,7 @@ export function mount(host: Host): void {
       if (o && s.mine[i]) cls.push("boom");
       if (i === hint) cls.push("hint");
       if (i === lastPick) cls.push("last");
-      const el = h("button", { class: cls.join(" "), onclick: () => { if (mode === "play") open(i); }, oncontextmenu: (e: Event) => { e.preventDefault(); if (mode === "play" && !s.open[i]) { s.flag[i] ^= 1; sfx.move(); draw(); } } });
+      const el = h("button", { class: cls.join(" "), onclick: () => { if (mode === "play") open(i); }, oncontextmenu: (e: Event) => { e.preventDefault(); if (mode === "play" && !s.open[i]) { s.flag[i] ^= 1; sfx.flag(); draw(); } } });
       if (o) {
         if (s.mine[i]) el.textContent = "✸";
         else if (s.n[i]) { el.textContent = String(s.n[i]); el.dataset.n = String(s.n[i]); }

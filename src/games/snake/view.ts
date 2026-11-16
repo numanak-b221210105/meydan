@@ -71,7 +71,7 @@ export function mount(host: Host): void {
     s.body.unshift(nx);
     if (nx === s.food) {
       score += 10;
-      sfx.tick();
+      sfx.eat();
       if (s.body.length >= W * H) { alive = false; host.status(L("Tahta doldu! Mükemmel oyun", "Board filled! Perfect game"), "good"); sfx.win(); return; }
       placeFood();
     } else s.body.pop();

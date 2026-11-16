@@ -85,6 +85,7 @@ tests/                 Vitest suites for every engine and AI
 - **Engines are pure TypeScript.** Rules and AIs have no DOM code, so the same module runs in the page, in the Web Worker and in the tests.
 - **Progress streaming.** Long searches post intermediate results (each completed depth in chess, visit counts in MCTS, every generation in the GA), which is what makes the console "live".
 - **Cancellation.** Starting a new game or leaving a cabinet terminates the worker, so a long search never blocks the next one.
+- **Synthesized sound.** Every effect and the soundtrack are generated with the Web Audio API at runtime: wooden knocks for board pieces, dice rattles, soft chimes. The music is a slow, generative A-minor piece (pad, sine bass, a sparse pentatonic melody picked at random each bar) that never loops exactly; it is calmer in the lobby and board games and a little livelier in the arcade games. Effects are rate-limited so fast AI-vs-AI play never turns into a buzz. No audio files.
 - **No framework, no runtime dependencies.** Plain TypeScript, Canvas and DOM; Vite builds it into static files.
 
 ## Run it
@@ -116,7 +117,7 @@ CI runs type checks, tests and a production build on Windows, macOS and Linux wi
 | Blast | Arrow keys to move, `Space` to drop a bomb |
 | Minesweeper | Left click to open, right click to flag |
 
-The language (Turkish / English) and sound can be switched from the top of the arcade. Records and win/loss counts are stored in the browser.
+The language (Turkish / English), sound effects and music can be switched from the top of the arcade; the sound and music buttons are also on every game screen. Records and win/loss counts are stored in the browser.
 
 ## Notes
 
