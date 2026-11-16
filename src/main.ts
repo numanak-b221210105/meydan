@@ -4,6 +4,9 @@ import { openGame } from "./core/shell";
 import { GAMES } from "./games";
 import { renderHub } from "./hub/hub";
 import { setMood } from "./core/sfx";
+import { isTouch } from "./core/touch";
+
+document.documentElement.classList.toggle("touch", isTouch());
 
 const app = document.getElementById("app")!;
 let close: (() => void) | null = null;
@@ -27,3 +30,5 @@ function route(): void {
 window.addEventListener("hashchange", route);
 onLang(route);
 route();
+
+if ("serviceWorker" in navigator && import.meta.env.PROD) navigator.serviceWorker.register("./sw.js").catch(() => {});

@@ -320,3 +320,35 @@ canvas.netc { width: 100%; height: auto; display: block; }
 .tbtn.snd[aria-pressed="false"] .wave { display: none; }
 .g-audio { display: flex; gap: 6px; margin-left: 10px; flex: none; }
 .status:empty + .g-audio { margin-left: auto; }
+
+/* touch controls (phones, tablets) */
+.tpad { display: none; }
+.touch .tpad {
+  display: grid; grid-template-columns: repeat(3, 58px) 1fr 86px; grid-template-rows: 54px 54px;
+  grid-template-areas: ". up . . a" "left down right . a"; gap: 8px; width: 100%; max-width: 420px; margin: 12px auto 0;
+  user-select: none; -webkit-user-select: none; touch-action: none;
+}
+.tkey {
+  border-radius: 14px; border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--panel)); color: var(--accent);
+  font: 800 20px var(--mono); touch-action: none; -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 0 16px -8px var(--accent); transition: transform .06s, background .06s;
+}
+.tkey.on { transform: scale(.94); background: color-mix(in srgb, var(--accent) 28%, var(--panel)); }
+.tk-up { grid-area: up; } .tk-down { grid-area: down; } .tk-left { grid-area: left; } .tk-right { grid-area: right; }
+.tk-a { grid-area: a; border-radius: 50%; align-self: center; height: 86px; font-size: 26px; }
+.tk-a.wide { border-radius: 16px; height: 100%; font-size: 14px; letter-spacing: .08em; }
+.touch .hint:has(.kbd) { display: none; }
+.flagbtn[aria-pressed="true"] { color: var(--bg, #0d0b1c); background: var(--accent); border-color: var(--accent); }
+
+/* phones */
+@media (max-width: 700px) {
+  .g-top { gap: 10px; }
+  .g-top .g-title { flex: 1; min-width: 0; }
+  .g-top .g-title small { display: none; }
+  .g-audio { order: 2; margin-left: 0; }
+  .g-top .status { order: 3; width: 100%; margin-left: 0; justify-content: center; }
+  .t-wrap { width: min(42vh, calc(100vw - 150px)); }
+  .t-side { width: 96px; padding: 10px; }
+  .t-side canvas { width: 72px !important; height: auto !important; }
+}

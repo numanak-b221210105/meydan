@@ -2,6 +2,7 @@ import { h, hiDpi, segmented } from "../../core/dom";
 import { L, fmt } from "../../core/i18n";
 import type { Host } from "../../core/shell";
 import { sfx } from "../../core/sfx";
+import { swipe, touchPad } from "../../core/touch";
 import { best } from "../../core/store";
 import { spark, stats } from "../../core/viz";
 import { DIRS, plan, type Plan, type Snake } from "./ai";
@@ -23,7 +24,12 @@ export function mount(host: Host): void {
 
   const canvas = h("canvas", { class: "arena" });
   const g = hiDpi(canvas, W * CELL, H * CELL);
-  host.stage.append(h("div", { class: "arena-col" }, h("div", { class: "arena-wrap" }, canvas), h("div", { class: "hint" }, L("Oynarken ", "When playing: "), h("span", { class: "kbd" }, "← ↑ → ↓"), " / ", h("span", { class: "kbd" }, "WASD"), L(" ile yön, ", " to steer, "), h("span", { class: "kbd" }, "P"), L(" duraklat", " to pause"))));
+  host.stage.append(h("div", { class: "arena-col" }, h("div", { class: "arena-wrap" }, canvas), h("div", { class: "hint" }, L("Oynarken ", "When playing: "), h("span", { class: "kbd" }, "← ↑ → ↓"), " / ", h("span", { class: "kbd" }, "WASD"), L(" ile yön, ", " to steer, "), h("span", { class: "kbd" }, "P"), L(" duraklat", " to pause")),
+    touchPad([
+      { code: "ArrowUp", label: "▲", area: "up" }, { code: "ArrowLeft", label: "◀", area: "left" },
+      { code: "ArrowDown", label: "▼", area: "down" }, { code: "ArrowRight", label: "▶", area: "right" },
+    ])));
+  swipe(canvas);
   host.controls.append(
     segmented<Mode>([["auto", L("Otopilot (A*)", "Autopilot (A*)")], ["play", L("Sen oyna", "You play")]], mode, (m) => { mode = m; reset(); }),
     segmented<string>([["8", L("Yavaş", "Slow")], ["14", L("Normal", "Normal")], ["30", L("Hızlı", "Fast")], ["90", L("Turbo", "Turbo")]], "14", (v) => { speed = Number(v); }),

@@ -2,6 +2,7 @@ import { h, hiDpi, segmented } from "../../core/dom";
 import { L } from "../../core/i18n";
 import type { Host } from "../../core/shell";
 import { sfx } from "../../core/sfx";
+import { touchPad } from "../../core/touch";
 import { bump } from "../../core/store";
 import { stats } from "../../core/viz";
 import { GH, GW, T, botThink, create, placeBomb, step, tryMove, type World } from "./game";
@@ -21,7 +22,12 @@ export function mount(host: Host): void {
 
   const canvas = h("canvas", { class: "arena bomber" });
   const g = hiDpi(canvas, GW * C, GH * C);
-  host.stage.append(h("div", { class: "arena-col bomber-col" }, h("div", { class: "arena-wrap" }, canvas), h("div", { class: "hint" }, h("span", { class: "kbd" }, "← ↑ → ↓"), L(" hareket · ", " move · "), h("span", { class: "kbd" }, "Space"), L(" bomba bırak", " drop a bomb"))));
+  host.stage.append(h("div", { class: "arena-col bomber-col" }, h("div", { class: "arena-wrap" }, canvas), h("div", { class: "hint" }, h("span", { class: "kbd" }, "← ↑ → ↓"), L(" hareket · ", " move · "), h("span", { class: "kbd" }, "Space"), L(" bomba bırak", " drop a bomb")),
+    touchPad([
+      { code: "ArrowUp", label: "▲", area: "up" }, { code: "ArrowLeft", label: "◀", area: "left" },
+      { code: "ArrowDown", label: "▼", area: "down" }, { code: "ArrowRight", label: "▶", area: "right" },
+      { code: "Space", label: "💣", area: "a" },
+    ])));
   host.controls.append(
     segmented<Mode>([["play", L("Sen vs 3 bot", "You vs 3 bots")], ["watch", L("4 botu izle", "Watch 4 bots")]], mode, (m) => { mode = m; restart(); }),
     segmented<string>([["on", L("Tehlike haritası açık", "Danger map on")], ["off", L("Kapalı", "Off")]], "on", (v) => { showAI = v === "on"; }),

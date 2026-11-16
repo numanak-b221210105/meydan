@@ -3,6 +3,7 @@ import { h, hiDpi, segmented } from "../../core/dom";
 import { L, fmt } from "../../core/i18n";
 import type { Host } from "../../core/shell";
 import { sfx } from "../../core/sfx";
+import { swipe, touchPad } from "../../core/touch";
 import { best as record, load, save } from "../../core/store";
 import { bars, spark, stats } from "../../core/viz";
 import { DEFAULT_WEIGHTS, best, type GenInfo, type Placement, type Weights } from "./ai";
@@ -36,6 +37,12 @@ export function mount(host: Host): void {
   const side = h("div", { class: "t-side" }, h("small", {}, L("SIRADAKİ", "NEXT")), nextCanvas, h("div", { class: "t-score" }));
   host.stage.append(h("div", { class: "tetris-col" }, h("div", { class: "arena-wrap t-wrap" }, canvas), side));
   host.stage.append(h("div", { class: "hint t-hint" }, h("span", { class: "kbd" }, "← →"), L(" kaydır · ", " move · "), h("span", { class: "kbd" }, "↑"), L(" döndür · ", " rotate · "), h("span", { class: "kbd" }, "↓"), L(" hızlı · ", " soft drop · "), h("span", { class: "kbd" }, "Space"), L(" bırak", " hard drop")));
+  host.stage.append(touchPad([
+    { code: "ArrowLeft", label: "◀", area: "left", repeat: true }, { code: "ArrowRight", label: "▶", area: "right", repeat: true },
+    { code: "ArrowDown", label: "▼", area: "down", repeat: true }, { code: "ArrowUp", label: "⟳", area: "up" },
+    { code: "Space", label: L("BIRAK", "DROP"), area: "a", wide: true },
+  ]));
+  swipe(canvas, "ArrowUp");
   host.controls.append(
     segmented<Mode>([["ai", L("AI oynasın", "AI plays")], ["play", L("Sen oyna", "You play")]], mode, (m) => { mode = m; reset(); }),
     segmented<string>([["1", L("Normal", "Normal")], ["2", L("Hızlı", "Fast")], ["30", L("Turbo", "Turbo")]], "2", (v) => { speed = Number(v); }),

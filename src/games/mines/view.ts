@@ -2,6 +2,7 @@ import { h, segmented } from "../../core/dom";
 import { L, fmt } from "../../core/i18n";
 import type { Host } from "../../core/shell";
 import { sfx } from "../../core/sfx";
+import { isTouch } from "../../core/touch";
 import { best, load, save } from "../../core/store";
 import { log, stats } from "../../core/viz";
 import { create, reveal, solve, type MState, type Solve } from "./engine";
@@ -25,10 +26,16 @@ export function mount(host: Host): void {
   const grid = h("div", { class: "mgrid" });
   const top = h("div", { class: "mtop" });
   host.stage.append(h("div", { class: "board-col mines-col" }, top, h("div", { class: "board-wrap mines" }, grid)));
+  let flagMode = false;
   host.controls.append(
     segmented<Mode>([["ai", L("AI çözsün", "AI solves")], ["play", L("Sen oyna", "You play")]], mode, (m) => { mode = m; reset(); }),
     segmented<keyof typeof SIZES>([["s", "9×9"], ["m", "16×16"], ["l", "24×16"]], size, (v) => { size = v; reset(); }),
     segmented<string>([["on", L("Olasılıklar açık", "Odds on")], ["off", L("Kapalı", "Off")]], "on", (v) => { heat = v === "on"; draw(); }),
+    ...(isTouch() ? [h("button", { class: "btn flagbtn", "aria-pressed": "false", onclick: (e: Event) => {
+      flagMode = !flagMode;
+      (e.currentTarget as HTMLElement).setAttribute("aria-pressed", String(flagMode));
+      sfx.click();
+    } }, "⚑ ", L("Bayrak modu", "Flag mode"))] : []),
     h("button", { class: "btn", onclick: () => showHint() }, L("İpucu", "Hint")),
     h("button", { class: "btn pri", onclick: () => reset() }, L("Yeni oyun", "New game")),
   );
@@ -123,7 +130,7 @@ export function mount(host: Host): void {
       if (o && s.mine[i]) cls.push("boom");
       if (i === hint) cls.push("hint");
       if (i === lastPick) cls.push("last");
-      const el = h("button", { class: cls.join(" "), onclick: () => { if (mode === "play") open(i); }, oncontextmenu: (e: Event) => { e.preventDefault(); if (mode === "play" && !s.open[i]) { s.flag[i] ^= 1; sfx.flag(); draw(); } } });
+      const el = h("button", { class: cls.join(" "), onclick: () => { if (mode !== "play") return; if (flagMode && !s.open[i]) { s.flag[i] ^= 1; sfx.flag(); draw(); } else open(i); }, oncontextmenu: (e: Event) => { e.preventDefault(); if (mode === "play" && !s.open[i]) { s.flag[i] ^= 1; sfx.flag(); draw(); } } });
       if (o) {
         if (s.mine[i]) el.textContent = "✸";
         else if (s.n[i]) { el.textContent = String(s.n[i]); el.dataset.n = String(s.n[i]); }

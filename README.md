@@ -108,14 +108,16 @@ CI runs type checks, tests and a production build on Windows, macOS and Linux wi
 
 ## Controls
 
-| Game | Controls |
-|---|---|
-| Board games | Click a piece, then a highlighted square |
-| Snake | Arrow keys or WASD, `P` to pause |
-| Tetris | `←` `→` move, `↑` rotate, `↓` soft drop, `Space` hard drop |
-| Flap | `Space` or click |
-| Blast | Arrow keys to move, `Space` to drop a bomb |
-| Minesweeper | Left click to open, right click to flag |
+| Game | Keyboard / mouse | Phone / tablet |
+|---|---|---|
+| Board games | Click a piece, then a highlighted square | Tap |
+| Snake | Arrow keys or WASD, `P` to pause | On-screen pad or swipe |
+| Tetris | `←` `→` move, `↑` rotate, `↓` soft drop, `Space` hard drop | On-screen pad (hold to repeat), tap the board to rotate |
+| Flap | `Space` or click | Tap |
+| Blast | Arrow keys to move, `Space` to drop a bomb | On-screen pad and bomb button |
+| Minesweeper | Left click to open, right click to flag | Tap to open, "Flag mode" button to flag |
+
+Meydan is an installable web app (PWA): on a phone use "Add to Home Screen", on desktop the install icon in the address bar. After the first visit it also works offline. On touch screens the keyboard games get an on-screen pad automatically.
 
 The language (Turkish / English), sound effects and music can be switched from the top of the arcade; the sound and music buttons are also on every game screen. Records and win/loss counts are stored in the browser.
 
