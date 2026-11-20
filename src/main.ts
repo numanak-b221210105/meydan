@@ -1,10 +1,11 @@
 import "./style.css";
-import { onLang } from "./core/i18n";
+import { lang, onLang } from "./core/i18n";
 import { openGame } from "./core/shell";
 import { GAMES } from "./games";
 import { renderHub } from "./hub/hub";
 import { setMood } from "./core/sfx";
 import { isTouch } from "./core/touch";
+import { installHint } from "./core/install";
 
 document.documentElement.classList.toggle("touch", isTouch());
 
@@ -31,4 +32,5 @@ window.addEventListener("hashchange", route);
 onLang(route);
 route();
 
+installHint({ app: "Meydan", lang, accent: "#c026d3", delayMs: 40000 });
 if ("serviceWorker" in navigator && import.meta.env.PROD) navigator.serviceWorker.register("./sw.js").catch(() => {});
